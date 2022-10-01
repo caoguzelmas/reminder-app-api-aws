@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'reminder-app-api-aws
+
+  Sample SAM Template for reminder-app-api-aws
+
+  '
+Globals:
+  Function:
+    Timeout: 200
+    Runtime: java11
+    Architectures:
+    - x86_64
+    MemorySize: 512
+Resources:
+  CreateReminderHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateReminderHandlerFunction
+      Handler: com.caoguzelmas.aws.lambda.CreateReminderHandler::handleRequest
+      Events:
+        CreateUser:
+          Type: Api
+          Properties:
+            Path: /reminders
+            Method: post
+    Metadata:
+      SamResourceId: CreateReminderHandlerFunction
+Outputs:
+  ReminderAppApi:
+    Description: API Gateway endpoint URL for Prod stage for Reminder Application
+      function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  CreateReminderHandlerFunction:
+    Description: CreateReminderHandlerFunction Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - CreateReminderHandlerFunction
+      - Arn
+  CreateReminderHandlerFunctionIamRole:
+    Description: Implicit IAM Role created for CreateReminderHandlerFunction function
+    Value:
+      Fn::GetAtt:
+      - CreateReminderHandlerFunction
+      - Arn
