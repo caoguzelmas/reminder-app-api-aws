@@ -1,4 +1,7 @@
 package com.caoguzelmas.aws.lambda.dao;
 
-public class ReminderDao {
+import com.caoguzelmas.aws.lambda.model.Reminder;
+
+public interface ReminderDao {
+    Reminder save(Reminder reminder);
 }
